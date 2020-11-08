@@ -1,0 +1,40 @@
+<div class="card" style="width: inherit">
+  <img
+    (click)="toggleDisplay()"
+    [src]="
+      'http://openweathermap.org/img/w/' + weatherData?.weather[0].icon + '.png'
+    "
+    style="width: 100%; height: auto; border-radius: 8px"
+    onerror="this.src='https://rb.gy/55v86p';"
+  />
+  <div class="card-body">
+    <form
+      *ngIf="isShow"
+      [formGroup]="weatherSearchForm"
+      (ngSubmit)="sendToAPIXU(weatherSearchForm.value)"
+    >
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="text"
+          aria-describedby="weatherLocation"
+          placeholder="Please Enter the City"
+          formControlName="location"
+        />
+      </div>
+      <div class="text-center">
+        <p *ngIf="error">Please enter valid location</p>
+        <button
+          type="submit"
+          class="btn btn-success btn-md"
+          (click)="displayData()"
+        >
+          Search
+        </button>
+      </div>
+    </form>
+    <div *ngIf="isData && !isShow">
+      {{ this.weatherData?.main.temp + "°C" }}
+    </div>
+  </div>
+</div>
